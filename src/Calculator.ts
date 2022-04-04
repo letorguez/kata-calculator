@@ -6,8 +6,8 @@ export class Calculator {
 
   private processRawInput (rawInput: string): number[] {
     const [delimiter, input] = this.processDelimiter(rawInput)
-    const inputCol = input.split(delimiter)
-    return inputCol
+    const inputSplitted = input.split(delimiter)
+    return inputSplitted
       .map((element) => parseInt(element))
       .filter((element) => !isNaN(element))
   }
