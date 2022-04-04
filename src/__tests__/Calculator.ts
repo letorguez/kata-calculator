@@ -11,6 +11,7 @@ import { Calculator } from '../Calculator'
  * * processRawInputReturnSum('-1,2,3') -> 'Negatives not allowed'
  * * processRawInputReturnSum('100,1002,1') -> 101
  * * processRawInputReturnSum('//[;][,]\n1;2,3') -> 6
+ * * processRawInputReturnSum('//[**][^^]\n2**2^^2') -> 6
  */
 describe('Kata Calculator', () => {
   const calculator = new Calculator()
@@ -57,5 +58,10 @@ describe('Kata Calculator', () => {
     expect(calculator.processRawInputReturnSum('//[;][,]\n1;2,3')).toBe(6)
     expect(calculator.processRawInputReturnSum('//[*][^]\n2*2^2')).toBe(6)
     expect(calculator.processRawInputReturnSum('//[f][g]\n2f3g2')).toBe(7)
+  })
+  it('Should sepparate the raw input with custom delimiters of different length', () => {
+    expect(calculator.processRawInputReturnSum('//[;;;]\n1;;;2;;;3')).toBe(6)
+    expect(calculator.processRawInputReturnSum('//[**][^^]\n2**2^^2')).toBe(6)
+    expect(calculator.processRawInputReturnSum('//[ff][g]\n2ff3g2')).toBe(7)
   })
 })
