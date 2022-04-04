@@ -29,6 +29,11 @@ export class Calculator {
     let delimiter: string|RegExp = /[,\n]/
     if (rawInput.startsWith('//')) {
       delimiter = rawInput.substring(2, rawInput.indexOf('\n'))
+      if (delimiter.includes('[')) {
+        let delimiters: string[] = delimiter.split('[')
+        delimiters = delimiters.map(element => element.replace(']', ''))
+        delimiter = new RegExp(`[${delimiters.join('')}]`)
+      }
       rawInput = rawInput.slice(rawInput.indexOf('\n'))
     }
     return [delimiter, rawInput]
