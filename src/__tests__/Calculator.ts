@@ -8,6 +8,9 @@ import { Calculator } from '../Calculator'
  * * processRawInputReturnSum('1,2,A,4') -> 7
  * * processRawInputReturnSum('1\n2,3') -> 6
  * * processRawInputReturnSum('//;\n1;2;3;ref') -> 6
+ * * processRawInputReturnSum('-1,2,3') -> 'Negatives not allowed'
+ * * processRawInputReturnSum('100,1002,1') -> 101
+ * * processRawInputReturnSum('//[;][,]\n1;2,3') -> 6
  */
 describe('Kata Calculator', () => {
   const calculator = new Calculator()
@@ -39,8 +42,8 @@ describe('Kata Calculator', () => {
     expect(calculator.processRawInputReturnSum('//;\n1;2;3;ref')).toBe(6)
     expect(calculator.processRawInputReturnSum('///\n2/3/5')).toBe(10)
     expect(calculator.processRawInputReturnSum('//*\n2*2*2')).toBe(6)
+    expect(calculator.processRawInputReturnSum('//|\n2|3|2')).toBe(7)
     expect(calculator.processRawInputReturnSum('//^\n2^2^2')).toBe(6)
-    expect(calculator.processRawInputReturnSum('//f\n2f3f2')).toBe(7)
   })
   it('Should throw an error if a negative number is found', () => {
     expect(() => calculator.processRawInputReturnSum('-1,2,3')).toThrowError('Negatives not allowed')
