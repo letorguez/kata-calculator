@@ -6,7 +6,8 @@ export class Calculator {
   }
 
   private splitFirstNumber(input: string): [number, string] {
-    const firstDelimiter = input.indexOf(",");
+    const delimiter = /,|\n/;
+    const firstDelimiter = input.search(delimiter);
     if(firstDelimiter === -1) {
       let result = this.parseNumber(input);
       return [result, ""];
