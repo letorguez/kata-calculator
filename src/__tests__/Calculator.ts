@@ -15,7 +15,11 @@ import { Calculator } from '../Calculator'
  */
 describe('StringCalculator Should', () => {
   const calculator = new Calculator()
-  it('given empty string return 0', () => {
+  it('return 0 if given empty string ', () => {
     expect(calculator.processRawInputReturnSum('')).toBe(0)
+  })
+
+  it('given a string with only a number return that number', () => {
+    expect(calculator.processRawInputReturnSum('1')).toBe(1)
   })
 })
