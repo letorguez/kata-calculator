@@ -42,8 +42,11 @@ export class Calculator {
     }
     return input;
   }
-  // "//;\n1;2" should return "3"
-  // "//|\n1|2|3" should return "6"
-  // "//sep\n2sep3" should return "5"
-  // "//|\n1|2,3" is invalid and should return the message "'|' expected but ',' found at position 3."
+
+  // TODO:
+  // *"//|\n1|2,3" is invalid and should return the message "'|' expected but ',' found at position 3."
+
+  /*"-1,2" is invalid and should return the message "Negative not allowed : -1"
+    "2,-4,-5" is invalid and should return the message "Negative not allowed : -4, -5" 
+  */
 }
