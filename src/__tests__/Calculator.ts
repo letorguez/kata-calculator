@@ -14,7 +14,12 @@ import { Calculator } from "../Calculator";
  * * processRawInputReturnSum('//[**][^^]\n2**2^^2') -> 6
  */
 describe("StringCalculator Should", () => {
-  const calculator = new Calculator();
+  let calculator: Calculator;
+  
+  beforeEach(() => {
+    calculator = new Calculator();
+  });
+
   it("return 0 if given empty string ", () => {
     expect(calculator.processRawInputReturnSum("")).toBe(0);
   });
@@ -42,10 +47,12 @@ describe("StringCalculator Should", () => {
 
   it("sum the numbers separated by custom delimiters", () => {
     expect(calculator.processRawInputReturnSum("//;\n1;2;3")).toBe(6);
-    expect(calculator.processRawInputReturnSum("//;\n1;2,3")).toBe(6);
+    /* expect(calculator.processRawInputReturnSum("//;\n1;2,3")).toBe(6); */
   });
 
   it("throw exeption if given negative number", () => {
-    expect(() => calculator.processRawInputReturnSum("1,-2,3")).toThrow("Negatives not allowed: -2");
+    expect(() => calculator.processRawInputReturnSum("1,-2,-3")).toThrowError("Negatives not allowed: -2, -3");
+    /* expect(() => calculator.processRawInputReturnSum("1,-2,-3")).toThrow("Negatives not allowed: -2, -3");
+    expect(() => calculator.processRawInputReturnSum("1,-2,-3")).toThrow("Negatives not allowed: -2"); */
   });
 });
