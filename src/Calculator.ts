@@ -1,9 +1,10 @@
 export class Calculator {
-  public processRawInputReturnSum (rawInput: string): number {
-    let result = 0
-    if (!isNaN(parseInt(rawInput))) {
-      result += parseInt(rawInput)
+  public processRawInputReturnSum(rawInput: string): number {
+    let result = 0;
+    const parsedNumber = parseInt(rawInput);
+    if (!isNaN(parsedNumber)) {
+      result += parsedNumber;
     }
-    return result
+    return result;
   }
 }

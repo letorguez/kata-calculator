@@ -1,4 +1,4 @@
-import { Calculator } from '../Calculator'
+import { Calculator } from "../Calculator";
 
 /**
  * TODO:
@@ -13,13 +13,21 @@ import { Calculator } from '../Calculator'
  * * processRawInputReturnSum('//[;][,]\n1;2,3') -> 6
  * * processRawInputReturnSum('//[**][^^]\n2**2^^2') -> 6
  */
-describe('StringCalculator Should', () => {
-  const calculator = new Calculator()
-  it('return 0 if given empty string ', () => {
-    expect(calculator.processRawInputReturnSum('')).toBe(0)
-  })
+describe("StringCalculator Should", () => {
+  const calculator = new Calculator();
+  it("return 0 if given empty string ", () => {
+    expect(calculator.processRawInputReturnSum("")).toBe(0);
+  });
 
-  it('given a string with only a number return that number', () => {
-    expect(calculator.processRawInputReturnSum('1')).toBe(1)
-  })
-})
+  it("given a string with only a number return that number", () => {
+    expect(calculator.processRawInputReturnSum("1")).toBe(1);
+  });
+
+  it("ignore all not integer numbers", () => {
+    expect(calculator.processRawInputReturnSum("abc")).toBe(0);
+  });
+
+  it("sum the numbers separated by commas", () => {
+    expect(calculator.processRawInputReturnSum("1,2")).toBe(3);
+  });
+});
