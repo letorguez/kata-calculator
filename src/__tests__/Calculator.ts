@@ -29,5 +29,13 @@ describe("StringCalculator Should", () => {
 
   it("sum the numbers separated by commas", () => {
     expect(calculator.processRawInputReturnSum("1,2")).toBe(3);
+    expect(calculator.processRawInputReturnSum("1,2,5")).toBe(8);
+    expect(calculator.processRawInputReturnSum("1,2,a")).toBe(3);
+  });
+
+  it("sum the numbers separated by new lines and commas", () => {
+    expect(calculator.processRawInputReturnSum("1\n2")).toBe(3);
+    expect(calculator.processRawInputReturnSum("1\n2,3")).toBe(6);
+    expect(calculator.processRawInputReturnSum("1,2\n3,4")).toBe(10);
   });
 });
