@@ -30,7 +30,7 @@ export class Calculator {
 
   private parseNumber(number: string) {
     const parsedNumber = parseInt(number);
-    if (isNaN(parsedNumber)) return 0;
+    if (isNaN(parsedNumber) || parsedNumber > 1000) return 0;
     if (parsedNumber < 0){
       if(this.negativeNumbers === ""){
         this.negativeNumbers = `${parsedNumber}`;
@@ -48,9 +48,10 @@ export class Calculator {
 
   private processInput(input: string): string {
     const delimiter = input.match(/^\/\/(.*?)\n/);
-    if (delimiter) {
+    if (delimiter) { // //[;]\n -> ;*
       this.delimiter = new RegExp(delimiter[1]);
       input = input.substring(input.indexOf("\n") + 1);
+
     }
     return input;
   }
