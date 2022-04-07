@@ -62,4 +62,10 @@ describe("StringCalculator Should", () => {
     expect(calculator.processRawInputReturnSum("1,2,1001")).toBe(3);
     expect(calculator.processRawInputReturnSum("1,2,1001,2")).toBe(5);
   });
+
+  it("sum the numbers separated by custom delimiters of any length", () => {
+    expect(calculator.processRawInputReturnSum("//[***]\n1***2***3")).toBe(6);
+    expect(calculator.processRawInputReturnSum("//[e][%]\n1e2%3")).toBe(6);
+    expect(calculator.processRawInputReturnSum("//[*][$]\n1*2*3$4")).toBe(10);
+  });
 });

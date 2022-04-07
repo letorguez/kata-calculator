@@ -30,12 +30,14 @@ export class Calculator {
 
   private parseNumber(number: string) {
     const parsedNumber = parseInt(number);
-    if (isNaN(parsedNumber) || parsedNumber > 1000) return 0;
-    if (parsedNumber < 0){
-      if(this.negativeNumbers === ""){
+    if (isNaN(parsedNumber) || parsedNumber > 1000) {
+      return 0;
+    }
+
+    if (parsedNumber < 0) {
+      if (this.negativeNumbers === "") {
         this.negativeNumbers = `${parsedNumber}`;
-      }
-      else{
+      } else {
         this.negativeNumbers += `, ${parsedNumber}`;
       }
     }
@@ -48,10 +50,10 @@ export class Calculator {
 
   private processInput(input: string): string {
     const delimiter = input.match(/^\/\/(.*?)\n/);
-    if (delimiter) { // //[;]\n -> ;*
+    if (delimiter) {
       this.delimiter = new RegExp(delimiter[1]);
+      console.log(delimiter[1]);
       input = input.substring(input.indexOf("\n") + 1);
-
     }
     return input;
   }
