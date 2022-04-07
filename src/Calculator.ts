@@ -1,16 +1,23 @@
 export class Calculator {
   readonly defaultDelimiter = /[,\n]/;
   private delimiter: RegExp;
-  private negativeNumbers = "";
+  private negativeNumbers: number[] = [];
 
   constructor() {
     this.delimiter = this.defaultDelimiter;
   }
 
   public processRawInputReturnSum(rawInput: string): number {
-    const input = this.processInput(rawInput);
-    const [firstNumber, rest] = this.splitFirstNumber(input);
-    if (rest === "") return firstNumber;
+    if (this.containsCustomDelimiters(rawInput)) {
+      rawInput = rawInput.substring(rawInput.indexOf("\n") + 1);
+    }
+    const [firstNumber, rest] = this.splitFirstNumber(rawInput);
+    if (rest === "") {
+      if (this.negativeNumbers.length !== 0) {
+        throw new Error(`Negatives not allowed: ${this.negativeNumbers.join(", ")}`);
+      }
+      return firstNumber;
+    }
     return firstNumber + this.processRawInputReturnSum(rest);
   }
 
@@ -18,9 +25,6 @@ export class Calculator {
     const firstDelimiter = this.getFirstDelimiterIndex(input);
     if (firstDelimiter === -1) {
       let result = this.parseNumber(input);
-      if (this.negativeNumbers !== "") {
-        throw `Negatives not allowed: ${this.negativeNumbers}`;
-      }
       return [result, ""];
     }
     const firstNumber = this.parseNumber(input.substring(0, firstDelimiter));
@@ -33,13 +37,8 @@ export class Calculator {
     if (isNaN(parsedNumber) || parsedNumber > 1000) {
       return 0;
     }
-
     if (parsedNumber < 0) {
-      if (this.negativeNumbers === "") {
-        this.negativeNumbers = `${parsedNumber}`;
-      } else {
-        this.negativeNumbers += `, ${parsedNumber}`;
-      }
+      this.negativeNumbers.push(parsedNumber);
     }
     return parsedNumber;
   }
@@ -48,24 +47,25 @@ export class Calculator {
     return input.search(this.delimiter);
   }
 
-  private processInput(input: string): string {
+  private containsCustomDelimiters(input: string): boolean {
+    let result = false;
     const delimiter = input.match(/^\/\/(.*?)\n/);
     if (delimiter) {
-      const regexContainerSeparator = /[\[\]]/;
-      const delimiters = delimiter[1].split(regexContainerSeparator);
-      
-      this.delimiter = new RegExp(`[${delimiters.join("")}]`);
-      input = input.substring(input.indexOf("\n") + 1);
+      this.processDelimiter(delimiter[1]);
+      result = true;
     }
-    return input;
+    return result;
   }
 
-  // TODO:
-  // *"//|\n1|2,3" is invalid and should return the message "'|' expected but ',' found at position 3."
+  private processDelimiter(delimiter: string): void {
+    const regexContainerSeparator = /[\[\]]/;
+    const wellFormedDelimiters = this.escapeRegExp(
+      delimiter.split(regexContainerSeparator).join("")
+    );
+    this.delimiter = new RegExp(`[${wellFormedDelimiters}]`);
+  }
 
-  //  const regexContainerSeparator = /[\[\]]/;
-
-  /*"-1,2" is invalid and should return the message "Negative not allowed : -1"
-    "2,-4,-5" is invalid and should return the message "Negative not allowed : -4, -5" 
-  */
+  private escapeRegExp(delimiters: string) {
+    return delimiters.replace(/[.*+\-?^${}()|\\]/g, "\\$&");
+  }
 }

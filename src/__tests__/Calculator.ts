@@ -47,6 +47,7 @@ describe("StringCalculator Should", () => {
 
   it("sum the numbers separated by custom delimiters", () => {
     expect(calculator.processRawInputReturnSum("//;\n1;2;3")).toBe(6);
+    expect(calculator.processRawInputReturnSum("//^\n1^2^3")).toBe(6);
     /* expect(calculator.processRawInputReturnSum("//;\n1;2,3")).toBe(6); */
   });
 
