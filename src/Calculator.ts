@@ -51,8 +51,10 @@ export class Calculator {
   private processInput(input: string): string {
     const delimiter = input.match(/^\/\/(.*?)\n/);
     if (delimiter) {
-      this.delimiter = new RegExp(delimiter[1]);
-      console.log(delimiter[1]);
+      const regexContainerSeparator = /[\[\]]/;
+      const delimiters = delimiter[1].split(regexContainerSeparator);
+      
+      this.delimiter = new RegExp(`[${delimiters.join("")}]`);
       input = input.substring(input.indexOf("\n") + 1);
     }
     return input;
@@ -60,6 +62,8 @@ export class Calculator {
 
   // TODO:
   // *"//|\n1|2,3" is invalid and should return the message "'|' expected but ',' found at position 3."
+
+  //  const regexContainerSeparator = /[\[\]]/;
 
   /*"-1,2" is invalid and should return the message "Negative not allowed : -1"
     "2,-4,-5" is invalid and should return the message "Negative not allowed : -4, -5" 
