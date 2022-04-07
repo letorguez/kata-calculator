@@ -52,7 +52,14 @@ describe("StringCalculator Should", () => {
 
   it("throw exeption if given negative number", () => {
     expect(() => calculator.processRawInputReturnSum("1,-2,-3")).toThrowError("Negatives not allowed: -2, -3");
-    /* expect(() => calculator.processRawInputReturnSum("1,-2,-3")).toThrow("Negatives not allowed: -2, -3");
-    expect(() => calculator.processRawInputReturnSum("1,-2,-3")).toThrow("Negatives not allowed: -2"); */
+    calculator = new Calculator();
+    expect(() => calculator.processRawInputReturnSum("1,-2")).toThrow("Negatives not allowed: -2");
+    calculator = new Calculator();
+    expect(() => calculator.processRawInputReturnSum("1,2,-3")).toThrow("Negatives not allowed: -3");
+  });
+
+  it("ignore numbers bigger than 1000", () => {
+    expect(calculator.processRawInputReturnSum("1,2,1001")).toBe(3);
+    expect(calculator.processRawInputReturnSum("1,2,1001,2")).toBe(5);
   });
 });
